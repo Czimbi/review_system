@@ -1,0 +1,145 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title text-center mb-4">Submit Paper</h2>
+          
+          <form [formGroup]="paperForm" (ngSubmit)="onSubmit()" #form="ngForm">
+            <!-- Title -->
+            <div class="mb-3">
+              <label for="title" class="form-label">Title</label>
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                formControlName="title"
+                [ngClass]="{'is-invalid': paperForm.get('title')?.errors && paperForm.get('title')?.touched}"
+              >
+              <div class="invalid-feedback" *ngIf="paperForm.get('title')?.errors?.['required'] && paperForm.get('title')?.touched">
+                Title is required
+              </div>
+              <div class="invalid-feedback" *ngIf="paperForm.get('title')?.errors?.['minlength'] && paperForm.get('title')?.touched">
+                Title must be at least 5 characters long
+              </div>
+            </div>
+
+            <!-- Authors -->
+            <div class="mb-3">
+              <label for="authors" class="form-label">Authors (comma-separated)</label>
+              <input
+                type="text"
+                class="form-control"
+                id="authors"
+                formControlName="authors"
+                [ngClass]="{'is-invalid': paperForm.get('authors')?.errors && paperForm.get('authors')?.touched}"
+              >
+              <div class="invalid-feedback" *ngIf="paperForm.get('authors')?.errors?.['required'] && paperForm.get('authors')?.touched">
+                At least one author is required
+              </div>
+            </div>
+
+            <!-- Field -->
+            <div class="mb-3">
+              <label for="field" class="form-label">Field of Study</label>
+              <select
+                class="form-select"
+                id="field"
+                formControlName="field"
+                [ngClass]="{'is-invalid': paperForm.get('field')?.errors && paperForm.get('field')?.touched}"
+              >
+                <option value="">Select a field</option>
+                <option value="computer-science">Computer Science</option>
+                <option value="mathematics">Mathematics</option>
+                <option value="physics">Physics</option>
+                <option value="chemistry">Chemistry</option>
+                <option value="biology">Biology</option>
+                <option value="engineering">Engineering</option>
+                <option value="medicine">Medicine</option>
+                <option value="social-sciences">Social Sciences</option>
+                <option value="humanities">Humanities</option>
+                <option value="other">Other</option>
+              </select>
+              <div class="invalid-feedback" *ngIf="paperForm.get('field')?.errors?.['required'] && paperForm.get('field')?.touched">
+                Field is required
+              </div>
+            </div>
+
+            <!-- Abstract -->
+            <div class="mb-3">
+              <label for="abstract" class="form-label">Abstract</label>
+              <textarea
+                class="form-control"
+                id="abstract"
+                rows="5"
+                formControlName="abstract"
+                [ngClass]="{'is-invalid': paperForm.get('abstract')?.errors && paperForm.get('abstract')?.touched}"
+              ></textarea>
+              <div class="invalid-feedback" *ngIf="paperForm.get('abstract')?.errors?.['required'] && paperForm.get('abstract')?.touched">
+                Abstract is required
+              </div>
+              <div class="invalid-feedback" *ngIf="paperForm.get('abstract')?.errors?.['minlength'] && paperForm.get('abstract')?.touched">
+                Abstract must be at least 100 characters long
+              </div>
+            </div>
+
+            <!-- Keywords -->
+            <div class="mb-3">
+              <label for="keywords" class="form-label">Keywords (comma-separated)</label>
+              <input
+                type="text"
+                class="form-control"
+                id="keywords"
+                formControlName="keywords"
+                [ngClass]="{'is-invalid': paperForm.get('keywords')?.errors && paperForm.get('keywords')?.touched}"
+              >
+              <div class="invalid-feedback" *ngIf="paperForm.get('keywords')?.errors?.['required'] && paperForm.get('keywords')?.touched">
+                At least one keyword is required
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid">
+              <button 
+                type="submit" 
+                class="btn btn-primary"
+                [disabled]="isSubmitting"
+              >
+                {{ isSubmitting ? 'Submitting...' : 'Submit Paper' }}
+              </button>
+            </div>
+          </form>
+
+          <!-- Success Message -->
+          <div *ngIf="successMessage" class="alert alert-success mt-3">
+            {{ successMessage }}
+          </div>
+
+          <!-- Error Messages -->
+          <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+            {{ errorMessage }}
+          </div>
+
+          <!-- Debug Info -->
+          <div class="mt-3">
+            <small class="text-muted">
+              Form Status: {{ paperForm.status }} | 
+              Form Valid: {{ paperForm.valid }} | 
+              Form Touched: {{ paperForm.touched }} |
+              Form Dirty: {{ paperForm.dirty }}
+            </small>
+          </div>
+
+          <!-- Validation Errors -->
+          <div *ngIf="validationErrors.length > 0" class="alert alert-danger mt-3">
+            <ul class="mb-0">
+              <li *ngFor="let error of validationErrors">
+                {{ error.field }}: {{ error.message }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

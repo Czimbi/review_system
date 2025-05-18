@@ -1,0 +1,38 @@
+.card {
+  border: none;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+    transform: translateY(-2px);
+  }
+
+  &:disabled {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    transform: none;
+  }
+}
+
+.invalid-feedback {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.875em;
+  color: #dc3545;
+}
+
+.alert {
+  margin-top: 1rem;
+}

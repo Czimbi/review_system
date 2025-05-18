@@ -1,0 +1,59 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container">
+    <a class="navbar-brand" href="/">SZTEUniPress</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        @if (isAuthenticated()) {
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
+          </li>
+
+          @if (userRole() === 'author') {
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/submit" routerLinkActive="active">Submit Paper</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/my-papers" routerLinkActive="active">My Papers</a>
+            </li>
+          }
+
+          @if (userRole() === 'reviewer') {
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/assigned-papers" routerLinkActive="active">Assigned Papers</a>
+            </li>
+          }
+
+          @if (userRole() === 'editor') {
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/assign-papers" routerLinkActive="active">Assign Papers</a>
+            </li>
+          }
+
+          <li class="nav-item">
+            <a class="nav-link" href="#" (click)="logout($event)">Logout</a>
+          </li>
+        } @else {
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/register" routerLinkActive="active">Register</a>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container py-4">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="bg-light py-4 mt-auto">
+  <div class="container text-center">
+    <p class="mb-0">&copy; 2024 SZTEUniPress. All rights reserved.</p>
+  </div>
+</footer>

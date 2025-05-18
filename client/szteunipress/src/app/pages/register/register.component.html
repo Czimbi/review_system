@@ -1,0 +1,121 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title text-center mb-4">Register for SZTEUniPress</h2>
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="firstName" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="firstName" formControlName="firstName" required>
+                <div class="invalid-feedback" *ngIf="registerForm.get('firstName')?.errors?.['required'] && registerForm.get('firstName')?.touched">
+                  First name is required
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="lastName" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="lastName" formControlName="lastName" required>
+                <div class="invalid-feedback" *ngIf="registerForm.get('lastName')?.errors?.['required'] && registerForm.get('lastName')?.touched">
+                  Last name is required
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="email" formControlName="email" required>
+              <div class="invalid-feedback" *ngIf="registerForm.get('email')?.errors?.['required'] && registerForm.get('email')?.touched">
+                Email is required
+              </div>
+              <div class="invalid-feedback" *ngIf="registerForm.get('email')?.errors?.['email'] && registerForm.get('email')?.touched">
+                Please enter a valid email
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" formControlName="password" required>
+              <div class="invalid-feedback" *ngIf="registerForm.get('password')?.errors?.['required'] && registerForm.get('password')?.touched">
+                Password is required
+              </div>
+              <div class="invalid-feedback" *ngIf="registerForm.get('password')?.errors?.['minlength'] && registerForm.get('password')?.touched">
+                Password must be at least 8 characters
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirm Password</label>
+              <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword" required>
+              <div class="invalid-feedback" *ngIf="registerForm.get('confirmPassword')?.errors?.['required'] && registerForm.get('confirmPassword')?.touched">
+                Please confirm your password
+              </div>
+              <div class="invalid-feedback" *ngIf="registerForm.get('confirmPassword')?.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched">
+                Passwords do not match
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="userType">User Type *</label>
+              <select id="userType" formControlName="userType" class="form-control">
+                <option value="">Select User Type</option>
+                <option value="author">Author</option>
+                <option value="reviewer">Reviewer</option>
+                <option value="editor">Editor</option>
+              </select>
+              <div *ngIf="registerForm.get('userType')?.invalid && registerForm.get('userType')?.touched" class="error-message">
+                Please select a user type
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="institution">Institution *</label>
+              <input type="text" id="institution" formControlName="institution" class="form-control">
+              <div *ngIf="registerForm.get('institution')?.invalid && registerForm.get('institution')?.touched" class="error-message">
+                Institution is required
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="department">Department</label>
+              <input type="text" id="department" formControlName="department" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" id="title" formControlName="title" class="form-control">
+            </div>
+
+            <div class="form-group" *ngIf="registerForm.get('userType')?.value === 'reviewer'">
+              <label for="expertise">Areas of Expertise *</label>
+              <input type="text" id="expertise" formControlName="expertise" class="form-control" placeholder="Enter expertise areas separated by commas">
+              <div *ngIf="registerForm.get('expertise')?.invalid && registerForm.get('expertise')?.touched" class="error-message">
+                Please enter at least one area of expertise
+              </div>
+              <small class="form-text text-muted">Enter your areas of expertise separated by commas (e.g., Computer Science, Machine Learning, Data Analysis)</small>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary" [disabled]="!registerForm.valid || isSubmitting">
+                {{ isSubmitting ? 'Registering...' : 'Register' }}
+              </button>
+            </div>
+
+            <div class="alert alert-danger mt-3" *ngIf="errorMessage">
+              {{ errorMessage }}
+            </div>
+
+            <div class="alert alert-danger mt-3" *ngIf="validationErrors.length > 0">
+              <h5>Please fix the following errors:</h5>
+              <ul class="mb-0">
+                <li *ngFor="let error of validationErrors">
+                  <strong>{{ error.field }}</strong>: {{ error.message }}
+                </li>
+              </ul>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
