@@ -163,7 +163,7 @@ async function seedDatabase() {
         field: 'computer-science',
         abstract: 'Novel approaches to optimize resource allocation in cloud computing environments.',
         keywords: ['cloud computing', 'optimization', 'resource allocation'],
-        status: 'under_review',
+        status: 'submitted',
         submittedBy: authors[2]._id,
         author: authors[2]._id,
         reviewers: [reviewers[0]._id, reviewers[1]._id],
