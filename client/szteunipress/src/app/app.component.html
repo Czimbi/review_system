@@ -12,10 +12,10 @@
           </li>
 
           @if (userRole() === 'author') {
-            <li class="nav-item">
+        <li class="nav-item">
               <a class="nav-link" routerLink="/submit" routerLinkActive="active">Submit Paper</a>
-            </li>
-            <li class="nav-item">
+        </li>
+        <li class="nav-item">
               <a class="nav-link" routerLink="/my-papers" routerLinkActive="active">My Papers</a>
             </li>
           }
@@ -34,14 +34,14 @@
 
           <li class="nav-item">
             <a class="nav-link" href="#" (click)="logout($event)">Logout</a>
-          </li>
+        </li>
         } @else {
-          <li class="nav-item">
+        <li class="nav-item">
             <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/register" routerLinkActive="active">Register</a>
-          </li>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/register" routerLinkActive="active">Register</a>
+        </li>
         }
       </ul>
     </div>

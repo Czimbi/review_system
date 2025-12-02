@@ -113,17 +113,17 @@ export class SubmitPaperComponent implements OnInit {
       next: (response) => {
         console.log('Submission successful:', response);
         if (response.success) {
-          this.isSubmitting = false;
+        this.isSubmitting = false;
           this.successMessage = response.message || 'Paper submitted successfully!';
           this.paperForm.reset();
           
           // Navigate to home after 2 seconds
           setTimeout(() => {
-            this.router.navigate(['/home'], { 
-              queryParams: { 
-                message: 'Paper submitted successfully' 
-              }
-            });
+        this.router.navigate(['/home'], { 
+          queryParams: { 
+            message: 'Paper submitted successfully' 
+          }
+        });
           }, 2000);
         } else {
           this.isSubmitting = false;

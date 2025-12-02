@@ -207,7 +207,7 @@ Graylog collects and centralizes logs from your backend server and nginx reverse
    - Default credentials: `admin` / `admin`
    - Receives logs via GELF UDP on port `12201`
 
-2. **OpenSearch**:
+2. **Elasticsearch**:
    - Stores and indexes log data for fast searching
    - Runs internally (not exposed to host)
 
@@ -215,43 +215,99 @@ Graylog collects and centralizes logs from your backend server and nginx reverse
    - Stores Graylog metadata (separate from your app's MongoDB)
    - Runs internally (not exposed to host)
 
-### Quick Start
+### Quick Start - Step by Step
 
-1. Start Graylog stack:
-   ```bash
-   docker compose up -d graylog-mongo opensearch graylog
-   ```
+#### Step 1: Start Graylog Services
 
-2. Restart server and nginx to enable GELF logging:
-   ```bash
-   docker compose restart server nginx
-   ```
+```bash
+docker compose up -d graylog-mongo elasticsearch graylog
+```
 
-3. Access Graylog (first-time setup):
-   - Visit `http://localhost:9000`
-   - Wait 1-2 minutes for services to fully initialize
-   - **First login**: Graylog generates a random password for initial setup
-   - Check the password in logs: `docker compose logs graylog | grep "password"`
-   - Or look for a line like: `Initial configuration is accessible... with username 'admin' and password 'XXXXX'`
-   - Complete the preflight setup wizard
-   - After setup, you can change the password in **System → Users** if desired
+**Wait 2-3 minutes** for all services to fully initialize. You can check status with:
 
-4. View logs:
-   - Go to **Search** in the top menu
-   - You should see logs from `server` and `nginx` containers
-   - Filter by `tag:server` or `tag:nginx` to see specific service logs
+```bash
+docker compose ps | grep -E "(graylog|elasticsearch)"
+```
 
-### Testing
+All services should show as "Up" and "healthy".
 
-1. Generate some activity:
-   - Browse `http://localhost:8080`
-   - Try logging in, submitting a paper, etc.
-   - Make some API calls that might generate errors
+#### Step 2: Verify Services Are Running
 
-2. In Graylog:
-   - Search for logs: `tag:server` or `tag:nginx`
-   - Look for HTTP requests, errors, and application logs
-   - Use the search bar to filter by message content, status codes, etc.
+Run the status check script:
+
+```bash
+./scripts/check-graylog.sh
+```
+
+Or manually check:
+
+```bash
+docker compose logs graylog | grep "Graylog server up and running"
+```
+
+#### Step 3: Access Graylog Web Interface
+
+1. Open your web browser
+2. Navigate to: **http://localhost:9000**
+3. Wait for the page to load (may take 30-60 seconds on first load)
+
+#### Step 4: First-Time Login
+
+**Login Credentials:**
+- **Username:** `admin`
+- **Password:** `admin`
+
+> Note: The password is configured via `GRAYLOG_ROOT_PASSWORD_SHA2` in docker-compose.yml
+
+#### Step 5: Initial Setup
+
+After logging in:
+- You should see the Graylog dashboard immediately
+- **No data node setup required** - Graylog 4.3 uses manual Elasticsearch configuration (already configured)
+- If you see a welcome screen, click "Get Started" or "Continue"
+
+#### Step 6: Enable Log Collection
+
+To start collecting logs from your application:
+
+```bash
+docker compose restart server nginx
+```
+
+This enables GELF logging for both containers.
+
+#### Step 7: View Logs
+
+1. In Graylog, go to **Search** (top menu)
+2. You should see logs appearing from:
+   - `tag:server` - Backend Node.js logs
+   - `tag:nginx` - Nginx access/error logs
+
+### Quick Reference
+
+**Access Graylog:**
+- URL: http://localhost:9000
+- Username: `admin`
+- Password: `admin`
+
+**Check Status:**
+```bash
+./scripts/check-graylog.sh
+```
+
+**View Logs:**
+- In Graylog: Go to **Search** tab
+- Filter by: `tag:server` or `tag:nginx`
+- Search for errors: `level:ERROR`
+
+**Restart Services:**
+```bash
+docker compose restart graylog graylog-mongo elasticsearch
+```
+
+### Detailed Setup Guide
+
+For a complete step-by-step guide with troubleshooting, see **[GRAYLOG_SETUP.md](./GRAYLOG_SETUP.md)**
 
 ### Log Sources
 

@@ -37,20 +37,20 @@ export class LoginComponent {
       this.authService.login(formData).subscribe({
         next: (response) => {
           if (response.success && response.user) {
-            const user = this.authService.getCurrentUser();
-            if (user) {
-              switch (user.userType) {
-                case 'author':
+          const user = this.authService.getCurrentUser();
+          if (user) {
+            switch (user.userType) {
+              case 'author':
                   this.router.navigate(['/my-papers']);
                   break;
                 case 'editor':
                   this.router.navigate(['/assign-papers']);
-                  break;
-                case 'reviewer':
-                  this.router.navigate(['/review-papers']);
-                  break;
-                default:
-                  this.router.navigate(['/home']);
+                break;
+              case 'reviewer':
+                this.router.navigate(['/review-papers']);
+                break;
+              default:
+                this.router.navigate(['/home']);
               }
             } else {
               this.errorMessage = 'Error accessing user data';

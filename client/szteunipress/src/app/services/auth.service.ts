@@ -53,7 +53,7 @@ export class AuthService {
     const token = this.getToken();
     const user = this.getCurrentUser();
     this.authStateSubject.next(!!token && !!user);
-  }
+      }
 
   private setAuthData(token: string, user: User) {
     if (this.isBrowser) {
@@ -71,7 +71,7 @@ export class AuthService {
     } else {
       // Server-side error
       errorMessage = error.error?.message || 'Server error';
-    }
+        }
     return throwError(() => new Error(errorMessage));
   }
 
@@ -90,13 +90,13 @@ export class AuthService {
   register(userData: any): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/register`, userData)
       .pipe(
-        tap(response => {
+      tap(response => {
           if (response.success && response.token && response.user) {
             this.setAuthData(response.token, response.user);
-          }
+        }
         }),
         catchError(this.handleError)
-      );
+    );
   }
 
   logout(): void {
@@ -124,7 +124,7 @@ export class AuthService {
     } catch (e) {
       console.error('Error parsing user data:', e);
       return null;
-    }
+  }
   }
 
   isAuthenticated(): boolean {
